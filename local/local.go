@@ -639,7 +639,7 @@ func filterPath(s string) string {
 }
 
 // Pattern to match a windows absolute path: c:\temp path.
-var isAbsWinDrive = regexp.MustCompile(`[a-zA-Z]\:\\`)
+var isAbsWinDrive = regexp.MustCompile(`^[a-zA-Z]\:\\`)
 
 // uncPath converts an absolute Windows path
 // to a UNC long path.
@@ -653,10 +653,10 @@ func uncPath(s string) string {
 		if strings.HasPrefix(s, `\\?\`) {
 			return s
 		}
-		// Trim "//" from path and add UNC prefix.
+		// Trim "//" from path a  nd add UNC prefix.
 		return `\\?\UNC\` + strings.TrimPrefix(s, `\\`)
 	}
-	if isAbsWinDrive.Match([]byte(s)) {
+	if isAbsWinDrive.MatchString(s) {
 		return `\\?\` + s
 	}
 	return s

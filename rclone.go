@@ -15,6 +15,7 @@ import (
 	"github.com/spf13/pflag"
 
 	"github.com/ncw/rclone/fs"
+	"github.com/ncw/rclone/web"
 	// Active file systems
 	_ "github.com/ncw/rclone/amazonclouddrive"
 	_ "github.com/ncw/rclone/drive"
@@ -210,6 +211,16 @@ var Commands = []Command{
 			return nil
 		},
 		NoStats: true,
+	},
+	{
+		Name: "web",
+		Help: `
+        Start Webserver.`,
+		NoStats: true,
+		Run: func(fdst, fsrc fs.Fs) error {
+			web.StartServer()
+			return nil
+		},
 	},
 	{
 		Name: "help",
